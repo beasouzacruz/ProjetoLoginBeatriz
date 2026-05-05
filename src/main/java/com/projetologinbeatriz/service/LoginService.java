@@ -1,7 +1,5 @@
 package com.projetologinbeatriz.service;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -18,11 +16,18 @@ public class LoginService {
 		this.loginRepository = loginRepository;
 	}
 
-	public Login salvar(Login login) {
-		return loginRepository.save(login);
+	public Login authenticate(String username, String password) {
+
+		Login user = loginRepository.findByUsername(username);
+
+		if (user != null && user.getPassword().equals(password)) {
+			return user;
+		}
+
+		return null;
 	}
 
-	public List<Login> listar() {
-		return loginRepository.findAll();
+	public Login salvar(Login login) {
+		return loginRepository.save(login);
 	}
 }

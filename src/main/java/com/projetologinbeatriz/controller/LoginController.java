@@ -1,10 +1,7 @@
 package com.projetologinbeatriz.controller;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,7 +12,6 @@ import com.projetologinbeatriz.service.LoginService;
 
 @RestController
 @RequestMapping("/users")
-@CrossOrigin("*")
 public class LoginController {
 
 	private final LoginService loginService;
@@ -25,13 +21,22 @@ public class LoginController {
 		this.loginService = loginService;
 	}
 
+	// LOGIN (AUTENTICAR)
+	@PostMapping("/login")
+	public ResponseEntity<?> autenticar(@RequestBody Login login) {
+
+		Login autenticado = loginService.authenticate(login.getUsername(), login.getPassword());
+
+		if (autenticado != null) {
+			return ResponseEntity.ok(autenticado);
+		}
+
+		return ResponseEntity.status(401).body("Usuário ou senha inválidos");
+	}
+
+	// CADASTRAR
 	@PostMapping
 	public Login salvar(@RequestBody Login login) {
 		return loginService.salvar(login);
-	}
-
-	@GetMapping
-	public List<Login> listar() {
-		return loginService.listar();
 	}
 }

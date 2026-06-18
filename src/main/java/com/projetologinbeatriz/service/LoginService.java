@@ -18,11 +18,16 @@ public class LoginService {
 
 	public Login authenticate(String username, String password) {
 
-		Login user = loginRepository.findByUsername(username);
+	    System.out.println("USERNAME RECEBIDO: " + username);
+	    System.out.println("PASSWORD RECEBIDA: " + password);
 
-		if (user != null && user.getPassword().equals(password)) {
-			return user;
-		}
+	    Login user = loginRepository.findByUsername(username);
+
+	    System.out.println("USUARIO ENCONTRADO: " + user);
+
+	    if (user != null && user.getPassword().equals(password)) {
+	        return user;
+	    }
 
 		return null;
 	}

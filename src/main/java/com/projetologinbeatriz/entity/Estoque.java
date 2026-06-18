@@ -1,30 +1,30 @@
 package com.projetologinbeatriz.entity;
 
-import jakarta.persistence.CascadeType;
+import com.fasterxml.jackson.annotation.JsonProperty;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.OneToOne;
 import lombok.Data;
 
 @Data
 @Entity
-public class Produto {
+public class Estoque {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	private String descricao;
+	private String localizacao;
 
-	private String nome;
+	private Integer quantidade;
 
-	private Double preco;
-
-	private String url;
-
-	@OneToOne(mappedBy = "produto", cascade = CascadeType.ALL)
-	private Estoque estoque;
+	@OneToOne
+	@JoinColumn(name = "id_produto", nullable = false)
+	@JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
+	private Produto produto;
 
 }

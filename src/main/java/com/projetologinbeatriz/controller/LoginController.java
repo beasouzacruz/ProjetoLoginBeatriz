@@ -22,7 +22,7 @@ public class LoginController {
 	}
 
 	// LOGIN (AUTENTICAR)
-	@PostMapping("/login")
+	@PostMapping("/auth")
 	public ResponseEntity<?> autenticar(@RequestBody Login login) {
 
 		Login autenticado = loginService.authenticate(login.getUsername(), login.getPassword());
